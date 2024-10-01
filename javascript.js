@@ -6,23 +6,44 @@ let humanScore = 0;
 function getComputerChoice() {
     let computerChoice = Math.floor(Math.random() * 3) + 1;
 
-    // Return value of a function
-    console.log(`Computer choice is: ${computerChoice}`);
+    if (computerChoice === 1) {
+        console.log("Computer choice is rock");
+    }
+    else if (computerChoice === 2) {
+        console.log("Computer choice is paper")    
+    }
+    else {
+        console.log("Computer choice is scissors") 
+    }
+
     return computerChoice;
 }
 
 
 // Function checks for valid human input and returns human choice
 function getHumanChoice() {
-    let humanChoice = parseInt(prompt("Rock = 1, Paper = 2, Scissors = 3"));
+    let humanChoice = prompt("Rock, paper or scissors");
 
     // Check for valid input
-    if (humanChoice < 1 || humanChoice > 3 || (isNaN(humanChoice))) {
-        alert("Wrong input");
+    humanChoice = humanChoice.toLowerCase();
+
+    if (humanChoice === "rock") {
+        console.log("Human choice is rock");
+        humanChoice = 1;
+    }
+    else if (humanChoice === "paper") {
+        console.log("Human choice is paper");
+        humanChoice = 2;
+    }
+    else if (humanChoice === "scissors") {
+        console.log("Human choice is scissors");
+        humanChoice = 3;
+    }
+    else {
+        console.log("Invalid input");
         getHumanChoice();
     }
 
-    console.log(`Human choice is: ${humanChoice}`);
     return humanChoice;
 }
 
@@ -89,7 +110,6 @@ function playGame() {
     else {
         console.log(`Tie game! Score was ${humanScore} : ${computerScore}`);
     }
-
     alert("GAME OVER");
 }
 
