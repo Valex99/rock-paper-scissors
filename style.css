@@ -1,0 +1,10 @@
+.result {
+    width: 200px;
+    height: 100px;
+    margin-top: 20px;
+    background-color: pink;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
