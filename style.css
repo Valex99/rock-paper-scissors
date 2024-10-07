@@ -1,10 +1,25 @@
+.button-div {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    gap: 20px;
+}
+
 .result {
-    width: 200px;
     height: 100px;
     margin-top: 20px;
     background-color: pink;
-    border: 1px solid black;
+    border: 3px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: flex;
+    font-weight: bold;
+}
+
+button {
+    padding: 20px 40px;
+    background-color: greenyellow;
+    border: 3px solid black;
+    font-weight: bold;
 }
