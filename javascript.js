@@ -1,111 +1,95 @@
-let computerScore = 0;
+let humanChoice = 0;
+let computerChoice = 0;
+
 let humanScore = 0;
-let gamesPlayed = 0;
+let computerScore = 0;
+
+const startButon = document.querySelector(".start-button");
+const score = document.querySelector(".score");
+const mainContainer = document.querySelector(".main-container");
+const buttonsDiv = document.querySelector(".buttons");
+
+// Display score when the game starts
+startButon.addEventListener("click", function () {
+  score.textContent = "PLAYER: 0 | COMPUTER: 0";
+
+  startButon.remove();
+
+  // CREATE 3 NEW BUTTONS (RPS)
+  const rock = document.createElement("button");
+  rock.classList.add("rock-button");
+  rock.textContent = "ROCK";
+  buttonsDiv.appendChild(rock);
+  rock.addEventListener("click", function () {
+    humanChoice = "ROCK";
+    console.log(humanChoice);
+    // CALL PLAY ROUND FUNCTION
+    playRound(humanChoice, getComputerChoice());
+  });
+
+  const paper = document.createElement("button");
+  paper.classList.add("paper-button");
+  paper.textContent = "PAPER";
+  buttonsDiv.appendChild(paper);
+  paper.addEventListener("click", function () {
+    humanChoice = "PAPER";
+    console.log(humanChoice);
+    playRound(humanChoice, getComputerChoice());
+  });
+
+  const scissors = document.createElement("button");
+  scissors.classList.add("scissors-button");
+  scissors.textContent = "SCISSORS";
+  buttonsDiv.appendChild(scissors);
+  scissors.addEventListener("click", function () {
+    humanChoice = "SCISSORS";
+    console.log(humanChoice);
+    playRound(humanChoice, getComputerChoice());
+  });
+});
 
 // Function returns random computer choice for rock/paper/scissors
 function getComputerChoice() {
-    let computerChoice = Math.floor(Math.random() * 3) + 1;
-    if (computerChoice === 1) {
-        console.log("Computer choice is rock");
-    } else if (computerChoice === 2) {
-        console.log("Computer choice is paper");   
-    } else {
-        console.log("Computer choice is scissors");
-    }
-    return computerChoice;
+  let computerChoice = Math.floor(Math.random() * 3) + 1;
+  if (computerChoice === 1) {
+    computerChoice = "ROCK";
+  } else if (computerChoice === 2) {
+    computerChoice = "PAPER";
+  } else {
+    computerChoice = "SCISSORS";
+  }
+  console.log(`COMPUTER: ${computerChoice}`);
+  return computerChoice;
 }
 
-// Get human choice with buttons
-function getHumanChoice() {
-    let humanChoice = 0;
-
-    const rock = document.querySelector('.rock');
-    const paper = document.querySelector('.paper');
-    const scissors = document.querySelector('.scissors');
-
-    rock.addEventListener('click', function() {
-        if (gamesPlayed < 5) {
-            console.log('Human choice is: rock!'); 
-            humanChoice = 1;
-            playRound(humanChoice, getComputerChoice());
-        } else {
-            alert("Game over!");
-            decideWinner();
-        }
-    });
-
-    paper.addEventListener('click', function() {
-        if (gamesPlayed < 5) {
-            console.log('Human choice is: paper!');
-            humanChoice = 2;
-            playRound(humanChoice, getComputerChoice());
-        } else {
-            alert("Game over!");
-            decideWinner();
-        } 
-    });
-
-    scissors.addEventListener('click', function() {
-        if (gamesPlayed < 5) {
-            console.log('Human choice is: scissors!');
-            humanChoice = 3;
-            playRound(humanChoice, getComputerChoice());
-        } else {
-            alert("Game over!");
-            decideWinner();
-        }
-    });
-}
-
-
-// Function plays a single round of a game
 function playRound(humanChoice, computerChoice) {
-    gamesPlayed += 1;
-
-    if (humanChoice === computerChoice) {
-        console.log("Tie!");
-    } else if (humanChoice === 1) {
-        if (computerChoice === 2) {
-            console.log("Computer wins! Paper beats rock!");
-            computerScore += 1;
-        } else {
-            console.log("Human wins! Rock beats scissors");
-            humanScore += 1;
-        }
-    } else if (humanChoice === 2) {
-        if (computerChoice === 1) {
-            console.log("Human wins! Paper beats rock!");
-            humanScore += 1;
-        } else {
-            console.log("Computer wins! Scissors beat paper!");
-            computerScore += 1; 
-        }
-    } else {
-        if (computerChoice === 1) {
-            console.log("Computer wins! Rock beats scissors!");
-            computerScore += 1; 
-        } else {
-            console.log("Human wins! Scissors beat paper!");
-            humanScore += 1; 
-        }
-    }
-    let resultDiv = document.querySelector('.result');
-    resultDiv.textContent = `HUMAN: ${humanScore} vs. COMPUTER: ${computerScore}`
+  if (humanChoice === computerChoice) {
+    const tie = document.createElement("div");
+    tie.classList.add("game-log");
+    tie.innerHTML = `No winner...<br>${humanChoice} (Human) is equal to ${computerChoice} (Computer)`;
+    mainContainer.appendChild(tie);
+  } else if (
+    (humanChoice === "ROCK" && computerChoice === "SCISSORS") ||
+    (humanChoice === "PAPER" && computerChoice === "ROCK") ||
+    (humanChoice === "SCISSORS" && computerChoice === "PAPER")
+  ) {
+    humanScore++;
+    score.textContent = `PLAYER: ${humanScore} | COMPUTER: ${computerScore}`;
+    // HERE I NEED TO KEEP LOG OF THE GAME AND INCREASE SCORE
+    const humanWin = document.createElement("div");
+    humanWin.classList.add("game-log");
+    humanWin.innerHTML = `Human wins!<br>${humanChoice} (Human) BEATS ${computerChoice} (Computer)`;
+    mainContainer.appendChild(humanWin);
+  } else if (
+    (humanChoice === "ROCK" && computerChoice === "PAPER") ||
+    (humanChoice === "PAPER" && computerChoice === "SCISSORS") ||
+    (humanChoice === "SCISSORS" && computerChoice === "ROCK")
+  ) {
+    computerScore++;
+    score.textContent = `PLAYER: ${humanScore} | COMPUTER: ${computerScore}`;
+    const computerWin = document.createElement("div");
+    computerWin.classList.add("game-log");
+    computerWin.innerHTML = `Computer wins!<br>${computerChoice} (Computer) BEATS ${humanChoice} (Human)`;
+    mainContainer.appendChild(computerWin);
+  }
 }
-
-
-function decideWinner() {
-    if (computerScore > humanScore) {
-        alert(`Computer wins with score ${computerScore} : ${humanScore}`);
-    } else if (computerScore < humanScore) {
-        alert(`Human wins with score ${humanScore} : ${computerScore}`);
-    } else {
-        alert(`Tie game! Score was ${humanScore} : ${computerScore}`);
-    }
-}
-
-// Call function - start the game!
-getHumanChoice();
-
-
-// Create game log - for each round played, display who played which hand
