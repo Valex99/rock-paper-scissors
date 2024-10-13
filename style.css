@@ -1,14 +1,8 @@
-* {
-    border: 1px solid red;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .main-container {
-    height: 700px;
-    width: 400px;
+.main-container {
+    /*height: auto => take as much space as you need */
+    height: auto;
+    width: 370px;
     margin: auto;
-  
     display: flex;
     flex-direction: column;
   }
@@ -48,6 +42,7 @@
     display: flex;
     align-items: center;
     height: 45px;
+    min-height: 45px;
     padding-left: 6px;
     border-bottom: 1px solid palevioletred;
   }
@@ -57,4 +52,9 @@
     align-items: center;
     justify-content: center;
     height: 30px;
-  }  
+  }
+  
+  .winner-message {
+      color: rgb(60, 191, 45);
+      font-size: 20px;
+  }

@@ -9,21 +9,17 @@ const score = document.querySelector(".score");
 const mainContainer = document.querySelector(".main-container");
 const buttonsDiv = document.querySelector(".buttons");
 
-// Display score when the game starts
 startButon.addEventListener("click", function () {
   score.textContent = "PLAYER: 0 | COMPUTER: 0";
-
   startButon.remove();
 
-  // CREATE 3 NEW BUTTONS (RPS)
   const rock = document.createElement("button");
   rock.classList.add("rock-button");
   rock.textContent = "ROCK";
   buttonsDiv.appendChild(rock);
+
   rock.addEventListener("click", function () {
     humanChoice = "ROCK";
-    console.log(humanChoice);
-    // CALL PLAY ROUND FUNCTION
     playRound(humanChoice, getComputerChoice());
   });
 
@@ -31,9 +27,9 @@ startButon.addEventListener("click", function () {
   paper.classList.add("paper-button");
   paper.textContent = "PAPER";
   buttonsDiv.appendChild(paper);
+
   paper.addEventListener("click", function () {
     humanChoice = "PAPER";
-    console.log(humanChoice);
     playRound(humanChoice, getComputerChoice());
   });
 
@@ -41,14 +37,13 @@ startButon.addEventListener("click", function () {
   scissors.classList.add("scissors-button");
   scissors.textContent = "SCISSORS";
   buttonsDiv.appendChild(scissors);
+
   scissors.addEventListener("click", function () {
     humanChoice = "SCISSORS";
-    console.log(humanChoice);
     playRound(humanChoice, getComputerChoice());
   });
 });
 
-// Function returns random computer choice for rock/paper/scissors
 function getComputerChoice() {
   let computerChoice = Math.floor(Math.random() * 3) + 1;
   if (computerChoice === 1) {
@@ -58,7 +53,6 @@ function getComputerChoice() {
   } else {
     computerChoice = "SCISSORS";
   }
-  console.log(`COMPUTER: ${computerChoice}`);
   return computerChoice;
 }
 
@@ -75,7 +69,7 @@ function playRound(humanChoice, computerChoice) {
   ) {
     humanScore++;
     score.textContent = `PLAYER: ${humanScore} | COMPUTER: ${computerScore}`;
-    // HERE I NEED TO KEEP LOG OF THE GAME AND INCREASE SCORE
+
     const humanWin = document.createElement("div");
     humanWin.classList.add("game-log");
     humanWin.innerHTML = `Human wins!<br>${humanChoice} (Human) BEATS ${computerChoice} (Computer)`;
@@ -87,9 +81,19 @@ function playRound(humanChoice, computerChoice) {
   ) {
     computerScore++;
     score.textContent = `PLAYER: ${humanScore} | COMPUTER: ${computerScore}`;
+
     const computerWin = document.createElement("div");
     computerWin.classList.add("game-log");
     computerWin.innerHTML = `Computer wins!<br>${computerChoice} (Computer) BEATS ${humanChoice} (Human)`;
     mainContainer.appendChild(computerWin);
+  }
+  if (humanScore === 5 || computerScore === 5) {
+    buttonsDiv.innerHTML = "";
+    buttonsDiv.classList.add("winner-message");
+    if (humanScore === 5) {
+      buttonsDiv.textContent = "HUMAN WINS!";
+    } else {
+      buttonsDiv.textContent = "COMPUTER WINS!";
+    }
   }
 }
